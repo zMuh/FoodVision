@@ -13,4 +13,12 @@ venv/
 .env/
 
 # Ignore system files
+<<<<<<< HEAD
 .DS_Store
+=======
+<<<<<<< HEAD
+.DS_Store
+=======
+.DS_Store
+>>>>>>> b893453d02d18af9c7229bf98cc0e8856ee97e2f
+>>>>>>> 27f48ce72d8a7894159ffd4ba434af149070bbed
