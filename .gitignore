@@ -1,1 +1,6 @@
-/raw_data
+# Keep the folder itself and .gitkeep first
+!raw_data/
+!raw_data/.gitkeep
+
+# Then ignore everything else inside
+raw_data/*
