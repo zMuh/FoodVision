@@ -1,1 +1,16 @@
-/raw_data/food-101
+# Ignore all raw data contents
+raw_data/*
+!raw_data/.gitkeep
+
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore virtual envs
+venv/
+.env/
+
+# Ignore system files
+.DS_Store
