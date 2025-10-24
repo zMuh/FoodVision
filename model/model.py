@@ -8,30 +8,15 @@ from pathlib import Path
 import logging
 import shutil
 
-try:
-    from ultralytics import YOLO
-except Exception:
-    raise RuntimeError("Please install ultralytics (`pip install ultralytics`) before running this script")
-
-# optional MLflow
-try:
-    import mlflow
-    HAVE_MLFLOW = True
-except Exception:
-    mlflow = None
-    HAVE_MLFLOW = False
+from ultralytics import YOLO
 
 logging.basicConfig(level=logging.INFO, format="%(asctime)s %(levelname)s %(message)s")
 logger = logging.getLogger(__name__)
 
-# -----------------------------
-# Helpers (moved to app/utils.py)
-# -----------------------------
+## Helpers Functions
 from app.utils import (
     download_gcs_folder,
     upload_folder_to_gcs,
-    generate_classification_data_yaml,
-    generate_detection_data_yaml,
 )
 
 
@@ -96,10 +81,6 @@ def train(
     pretrained: Optional[str] = None,
     # MLflow / GCS options
     save_to_gs: Optional[str] = None,
-    save_to_mlflow: bool = False,
-    mlflow_uri: Optional[str] = None,
-    mlflow_experiment: Optional[str] = None,
-    mlflow_run_name: Optional[str] = None,
     **kwargs,
 ):
     """Train the model.
@@ -122,42 +103,6 @@ def train(
         logger.info("Detected gs:// path, downloading dataset to local temp dir...")
         _local_tmp_dir = download_gcs_folder(data)
         data = str(Path(_local_tmp_dir).resolve())
-
-    # If 'data' is a folder, generate data yaml if needed
-    if os.path.isdir(data):
-        if task == "classify":
-            data = generate_classification_data_yaml(data, out="data_class.yaml")
-        else:
-            data = generate_detection_data_yaml(data, out="data_det.yaml")
-
-    # Setup MLflow if requested
-    mlflow_active = False
-    if save_to_mlflow or mlflow_experiment or mlflow_uri:
-        if not HAVE_MLFLOW:
-            logger.warning("MLflow requested but mlflow package is not installed. Skipping MLflow logging.")
-        else:
-            if mlflow_uri:
-                mlflow.set_tracking_uri(mlflow_uri)
-            if mlflow_experiment:
-                mlflow.set_experiment(mlflow_experiment)
-            mlflow_active = True
-
-    mlflow_run = None
-    if mlflow_active:
-        mlflow_run = mlflow.start_run(run_name=mlflow_run_name)
-        # log basic params
-        params = {
-            "model": model,
-            "task": task,
-            "epochs": epochs,
-            "batch": batch,
-            "imgsz": imgsz,
-            "device": device,
-        }
-        try:
-            mlflow.log_params(params)
-        except Exception:
-            logger.exception("Failed to log params to MLflow")
 
     logger.info("Starting training: model=%s task=%s data=%s", model, task, data)
     y = YOLO(model)
@@ -187,25 +132,6 @@ def train(
                 logger.info("Uploaded run directory to %s", save_to_gs)
             except Exception:
                 logger.exception("Failed to upload run dir to GCS")
-
-        # log to MLflow if active
-        if mlflow_active:
-            try:
-                # log weight files as artifacts
-                for key, path in weights.items():
-                    mlflow.log_artifact(str(path), artifact_path=f"weights/{key}")
-                # if tune produced best_hyperparameters.yaml or tune results, log them
-                for fname in ["best_hyperparameters.yaml", "tune_results.csv", "tune_scatter_plots.png"]:
-                    fpath = run_dir / fname
-                    if fpath.exists():
-                        mlflow.log_artifact(str(fpath), artifact_path="tune")
-            except Exception:
-                logger.exception("Failed to log artifacts to MLflow")
-            finally:
-                try:
-                    mlflow.end_run()
-                except Exception:
-                    pass
 
     # cleanup local temp downloaded dataset
     if _local_tmp_dir:
@@ -261,12 +187,7 @@ def tune(
     resume: bool = False,
     use_ray: bool = False,
     name: Optional[str] = None,
-    # MLflow / GCS options
     save_to_gs: Optional[str] = None,
-    save_to_mlflow: bool = False,
-    mlflow_uri: Optional[str] = None,
-    mlflow_experiment: Optional[str] = None,
-    mlflow_run_name: Optional[str] = None,
     **kwargs,
 ):
     """Run hyperparameter tuning using Ultralytics' model.tune()
@@ -282,35 +203,9 @@ def tune(
         _local_tmp_dir = download_gcs_folder(data)
         data = str(Path(_local_tmp_dir).resolve())
 
-    #if os.path.isdir(data):
-        #if task == "classify":
-            #data = generate_classification_data_yaml(data, out="data_class.yaml")
-        #else:
-            #data = generate_detection_data_yaml(data, out="data_det.yaml")
-
     search_space = space or default_search_space()
     y = YOLO(model)
     logger.info("Starting tuning: model=%s data=%s iterations=%s", model, data, iterations)
-
-    # MLflow setup if requested
-    mlflow_active = False
-    if save_to_mlflow or mlflow_experiment or mlflow_uri:
-        if not HAVE_MLFLOW:
-            logger.warning("MLflow requested but mlflow package is not installed. Skipping MLflow logging.")
-        else:
-            if mlflow_uri:
-                mlflow.set_tracking_uri(mlflow_uri)
-            if mlflow_experiment:
-                mlflow.set_experiment(mlflow_experiment)
-            mlflow_active = True
-
-    mlflow_run = None
-    if mlflow_active:
-        mlflow_run = mlflow.start_run(run_name=mlflow_run_name)
-        try:
-            mlflow.log_params({"model": model, "task": task, "iterations": iterations, "epochs": epochs})
-        except Exception:
-            logger.exception("Failed to log tune params to MLflow")
 
     results = y.tune(
         data=data,
@@ -328,38 +223,6 @@ def tune(
     )
 
     logger.info("Tuning finished. Results: %s", results)
-
-    # collect tune artifacts (runs/{task}/tune)
-    tune_dir = Path("runs") / task / "tune"
-    if tune_dir.exists():
-        logger.info("Found tune directory: %s", tune_dir)
-        # upload or mlflow-log
-        if save_to_gs:
-            try:
-                upload_folder_to_gcs(str(tune_dir), save_to_gs)
-                logger.info("Uploaded tune results to %s", save_to_gs)
-            except Exception:
-                logger.exception("Failed to upload tune dir to GCS")
-        if mlflow_active:
-            try:
-                # log everything under tune_dir as artifacts
-                for child in tune_dir.iterdir():
-                    if child.is_file():
-                        mlflow.log_artifact(str(child), artifact_path="tune")
-                    else:
-                        # walk subdirs
-                        for root, _, files in os.walk(child):
-                            for f in files:
-                                full = Path(root) / f
-                                rel = full.relative_to(tune_dir)
-                                mlflow.log_artifact(str(full), artifact_path=str(rel.parent))
-            except Exception:
-                logger.exception("Failed to log tune artifacts to MLflow")
-            finally:
-                try:
-                    mlflow.end_run()
-                except Exception:
-                    pass
 
     # cleanup
     if _local_tmp_dir:
@@ -409,10 +272,7 @@ def parse_args(argv=None):
     t.add_argument("--imgsz", type=int, default=224)
     t.add_argument("--workers", type=int, default=4)
     t.add_argument("--save-gs", default=None, help="GCS path to upload run outputs, e.g. gs://bucket/runs/exp1")
-    t.add_argument("--save-mlflow", action="store_true", help="Log results and weights to MLflow")
-    t.add_argument("--mlflow-uri", default=None, help="MLflow tracking URI")
-    t.add_argument("--mlflow-experiment", default=None, help="MLflow experiment name")
-    t.add_argument("--mlflow-run-name", default=None, help="MLflow run name")
+
 
     # tune
     tt = sub.add_parser("tune")
@@ -426,10 +286,7 @@ def parse_args(argv=None):
     tt.add_argument("--resume", action="store_true")
     tt.add_argument("--name", default=None)
     tt.add_argument("--save-gs", default=None, help="GCS path to upload tune outputs")
-    tt.add_argument("--save-mlflow", action="store_true", help="Log tune results to MLflow")
-    tt.add_argument("--mlflow-uri", default=None)
-    tt.add_argument("--mlflow-experiment", default=None)
-    tt.add_argument("--mlflow-run-name", default=None)
+
 
     # eval
     e = sub.add_parser("eval")
@@ -461,10 +318,6 @@ def main(argv=None):
             imgsz=args.imgsz,
             workers=args.workers,
             save_to_gs=args.save_gs,
-            save_to_mlflow=args.save_mlflow,
-            mlflow_uri=args.mlflow_uri,
-            mlflow_experiment=args.mlflow_experiment,
-            mlflow_run_name=args.mlflow_run_name,
         )
     elif args.cmd == "tune":
         tune(
@@ -478,10 +331,7 @@ def main(argv=None):
             resume=args.resume,
             name=args.name,
             save_to_gs=args.save_gs,
-            save_to_mlflow=args.save_mlflow,
-            mlflow_uri=args.mlflow_uri,
-            mlflow_experiment=args.mlflow_experiment,
-            mlflow_run_name=args.mlflow_run_name,
+
         )
     elif args.cmd == "eval":
         evaluate(weights=args.weights, data=args.data, task=args.task)

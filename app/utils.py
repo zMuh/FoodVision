@@ -1,4 +1,3 @@
-
 from __future__ import annotations
 import os
 import random
@@ -24,63 +23,6 @@ logger = logging.getLogger(__name__)
 def ensure_dir(p: str) -> None:
     """Ensure directory exists (mkdir -p equivalent)."""
     Path(p).mkdir(parents=True, exist_ok=True)
-
-
-def generate_classification_data_yaml(root: str, out: str = "data_class.yaml") -> str:
-    """Generate a classification-style data yaml for Ultralytics.
-
-    Expects `root/train` and `root/val` directories with class subfolders.
-    Returns the path to the written yaml.
-    """
-    root = Path(root)
-    train = str((root / "train").resolve())
-    val = str((root / "val").resolve())
-
-    # collect class names from train folder subdirs
-    classes = [p.name for p in sorted((root / "train").iterdir()) if p.is_dir()]
-    nc = len(classes)
-    data = {
-        "train": train,
-        "val": val,
-        "nc": nc,
-        "names": classes,
-    }
-    with open(out, "w") as f:
-        yaml.dump(data, f, sort_keys=False)
-    logger.info("Generated classification data yaml: %s", out)
-    return out
-
-
-def generate_detection_data_yaml(root: str, out: str = "data_det.yaml") -> str:
-    """Generate a detection-style data yaml that expects YOLO-format labels in same folders.
-
-    Expects `root/images/train`, `root/images/val` or `root/train`/`root/val` with image/label pairs.
-    Adjust this helper if your structure is different.
-    """
-    root = Path(root)
-    # Try common patterns
-    if (root / "images").exists():
-        train = str((root / "images" / "train").resolve())
-        val = str((root / "images" / "val").resolve())
-    else:
-        train = str((root / "train").resolve())
-        val = str((root / "val").resolve())
-
-    # try to get class names from a classes.txt or names file
-    names_file = root / "names.txt"
-    names = None
-    if names_file.exists():
-        names = [l.strip() for l in names_file.read_text().splitlines() if l.strip()]
-    nc = len(names) if names else None
-
-    data = {"train": train, "val": val}
-    if nc:
-        data.update({"nc": nc, "names": names})
-
-    with open(out, "w") as f:
-        yaml.dump(data, f, sort_keys=False)
-    logger.info("Generated detection data yaml: %s", out)
-    return out
 
 
 # ============================================================
