@@ -1,0 +1,7 @@
+# files/folders not to include in Heroku slug
+raw_data/
+data/
+datasets/
+notebooks/
+__pycache__/
+.git/
