@@ -1,20 +1,3 @@
-"""
-Comprehensive training / tuning / evaluation / prediction helper for Ultralytics YOLO
-File: FoodVision/model/model.py
-
-Features:
-- train(...) function (classification or detection)
-- tune(...) function using model.tune() with a sensible default search space
-- evaluate(...) and predict(...) helpers
-- data yaml generator for classification/detection
-- CLI entrypoint (train/tune/eval/predict)
-- MLflow integration: option to log weights/artifacts to an MLflow tracking server
-
-Usage examples:
-  python FoodVision/model/model.py train --data ./data/food101.yaml --epochs 10 --batch 64 --device cuda --save-mlflow --mlflow-experiment food101
-  python FoodVision/model/model.py tune --data ./data/food101.yaml --epochs 30 --iterations 200 --save-mlflow
-
-"""
 from __future__ import annotations
 import argparse
 import os

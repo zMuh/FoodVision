@@ -1,19 +1,4 @@
-"""
-Utility helpers for FoodVision project.
-Placed at: app/utils.py
 
-Contains:
-- ensure_dir
-- generate_classification_data_yaml
-- generate_detection_data_yaml
-- convert_food101_to_yolo
-- make_small_subset
-- GCS download/upload helpers
-- small unit helpers: lb_to_kg, inch_to_cm
-- calculate_calories: daily calorie estimator (Mifflin-St Jeor)
-
-These are intentionally minimal and filesystem-based. If you want GCS-aware helpers (streaming, partial downloads), tell me and I can add them.
-"""
 from __future__ import annotations
 import os
 import random
