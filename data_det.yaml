@@ -1,0 +1,2 @@
+train: /Users/muhannad/code/zMuh/FoodVision/raw_data/food-101/food101_yolo_small/train/train
+val: /Users/muhannad/code/zMuh/FoodVision/raw_data/food-101/food101_yolo_small/train/val

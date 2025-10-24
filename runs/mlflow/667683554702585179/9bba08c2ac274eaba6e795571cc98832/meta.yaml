@@ -1,0 +1,14 @@
+artifact_uri: /Users/muhannad/code/zMuh/FoodVision/runs/mlflow/667683554702585179/9bba08c2ac274eaba6e795571cc98832/artifacts
+end_time: 1761223673198
+entry_point_name: ''
+experiment_id: '667683554702585179'
+lifecycle_stage: active
+run_id: 9bba08c2ac274eaba6e795571cc98832
+run_name: train5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1761219502266
+status: 3
+tags: []
+user_id: muhannad

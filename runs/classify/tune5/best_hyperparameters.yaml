@@ -1,0 +1,26 @@
+# 1/300 iterations complete ✅ (4176.89s)
+# Results saved to /Users/muhannad/code/zMuh/FoodVision/runs/classify/tune5
+# Best fitness=0.78891 observed at iteration 1
+# Best fitness metrics are {'metrics/accuracy_top1': 0.68307, 'metrics/accuracy_top5': 0.89475, 'val/loss': 1.22479, 'fitness': 0.78891}
+# Best fitness model is /Users/muhannad/code/zMuh/FoodVision/runs/classify/train5
+lr0: 0.01
+lrf: 0.01
+momentum: 0.937
+weight_decay: 0.0005
+warmup_epochs: 3.0
+warmup_momentum: 0.8
+box: 0.2
+cls: 0.5
+hsv_h: 0.015
+hsv_s: 0.7
+hsv_v: 0.4
+degrees: 0.0
+translate: 0.1
+scale: 0.5
+shear: 0.0
+perspective: 0.0
+flipud: 0.0
+fliplr: 0.5
+mosaic: 1.0
+mixup: 0.0
+copy_paste: 0.0
