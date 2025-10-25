@@ -3,7 +3,7 @@ import tempfile
 import streamlit as st
 from PIL import Image
 
-model = YOLO("best.pt")  # or your trained model path
+model = YOLO("./models/best.pt")
 
 uploaded_file = st.file_uploader("Upload an image")
 
