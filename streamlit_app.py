@@ -4,24 +4,7 @@ import shutil
 from ultralytics import YOLO
 from model.model import predict as model_predict  # if you have a wrapper, else use YOLO directly
 from app.utils import get_nutrition  # your nutrition lookup function
-from app.utils import db
 
-
-st.title("Firestore Test")
-
-# إضافة مستند جديد
-doc_ref = db.collection("test").add({
-    "name": "Noha",
-    "role": "tester"
-})
-
-st.success("✅ Added a new test document to Firestore!")
-
-# قراءة المستندات وعرضها
-st.markdown("### Current documents in 'test' collection")
-docs = db.collection("test").stream()
-for doc in docs:
-    st.json(doc.to_dict())
 
 # --- Load YOLO model ---
 MODEL_PATH = "./models/best.pt"

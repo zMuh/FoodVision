@@ -9,38 +9,7 @@ from typing import List, Optional, Tuple, Dict
 import yaml
 import logging
 import requests
-import firebase_admin
-from firebase_admin import credentials, firestore
-from pathlib import Path
 
-def init_firebase():
-    """
-    Initialize Firebase and return a Firestore client.
-
-    Returns:
-        firestore.Client: Firestore client ready to use.
-    """
-    # Path to the service account key JSON file
-    key_path = Path(__file__).parent / "firebase_key.json"
-
-    # Load credentials from the key file
-    cred = credentials.Certificate(str(key_path))
-
-    # Initialize the Firebase app (only once)
-    firebase_admin.initialize_app(cred)
-
-    # Return Firestore client
-    return firestore.client()
-
-# Create a global Firestore client
-db = init_firebase()
-print("✅ Firebase is ready to use!")
-
-# Example usage (testing Firestore)
-if __name__ == "__main__":
-    db = init_firebase()
-    db.collection("users").add({"name": "Noha", "age": 25})
-    print("User added successfully!")
 
 
 
