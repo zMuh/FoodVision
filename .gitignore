@@ -19,3 +19,4 @@ venv/
 .DS_Store
 
 app/firebase_key.json
+app/firebase_key.json
