@@ -14,21 +14,42 @@ cred = credentials.Certificate({
     "auth_provider_x509_cert_url": st.secrets.firebase.auth_provider_x509_cert_url,
     "client_x509_cert_url": st.secrets.firebase.client_x509_cert_url
 })
-firebase_admin.initialize_app(cred)
+
+if not firebase_admin._apps:
+    firebase_admin.initialize_app(cred)
 
 # Connect to Firestore
 db = firestore.client()
 
 def save_user_data(user_id, name, weight, height, goal, daily_calories):
     """Save user profile to Firestore"""
-    doc_ref = db.collection("users").document(user_id)
-    doc_ref.set({
-        "name": name,
-        "weight": weight,
-        "height": height,
-        "goal": goal,
-        "daily_calories": daily_calories
-    })
+    users_ref = db.collection("users")
+    query = users_ref.where("user_id", "==", user_id).stream()
+
+    user_doc = None
+    for doc in query:
+        user_doc = doc
+        break
+
+    if user_doc:
+        # Update existing user
+        users_ref.document(user_doc.id).update({
+            "name": name,
+            "weight": weight,
+            "height": height,
+            "goal": goal,
+            "daily_calories": daily_calories
+        })
+    else:
+        # Add new user if not exists
+        users_ref.add({
+            "user_id": user_id,
+            "name": name,
+            "weight": weight,
+            "height": height,
+            "goal": goal,
+            "daily_calories": daily_calories
+        })
 
 def save_meal(user_id, food_name, calories, protein, fat, carbs, date):
     """Save meal record to Firestore"""
