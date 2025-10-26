@@ -13,10 +13,10 @@ venv/
 .env/
 
 # Ignore system files
-<<<<<<< HEAD
-.DS_Store
-=======
 .DS_Store
 
+# Ignore Firebase key
 app/firebase_key.json
-app/firebase_key.json
+
+# Ignore Streamlit secrets
+.streamlit/secrets.toml
