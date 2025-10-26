@@ -7,3 +7,4 @@ torchvision
 pillow
 opencv-python-headless
 firebase-admin
+plotly
