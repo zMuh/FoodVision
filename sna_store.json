@@ -1,255 +1,29 @@
 {
-  "users": {
-    "sa@gmail.com": {
-      "name": "salman",
-      "weight": 89.0,
-      "height": 170.0,
-      "goal": "lose",
-      "daily_cal": 1817
-    },
-    "sara1@gmail.com": {
-      "name": "sara",
-      "weight": 98.0,
-      "height": 170.0,
-      "goal": "lose",
-      "daily_cal": 1770
-    },
-    "sara12gmail.com": {
-      "name": "sara",
-      "weight": 80.0,
-      "height": 170.0,
-      "goal": "lose",
-      "daily_cal": 1549
-    }
-  },
-  "meals": {
-    "sa@gmail.com": [
+  "users": {},
+  "meals": {},
+  "undef_images": {
+    "muh": [
       {
-        "food_name": "Meal 1761502285",
+        "food_name": "mix of meals",
         "calories": 350.0,
         "protein": 15.0,
         "fat": 12.0,
         "carbs": 40.0,
         "date": "2025-10-27",
-        "thumb": ""
+        "thumb": "thumbs/muh_1761570068.jpg",
+        "predicted_confidence": 0.10636020451784134,
+        "model_label": "fried rice"
       },
       {
-        "food_name": "Meal 1761502339",
+        "food_name": "mix_of_meals",
         "calories": 350.0,
         "protein": 15.0,
         "fat": 12.0,
         "carbs": 40.0,
         "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761502362",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761502393",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761502442",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      }
-    ],
-    "sara1@gmail.com": [
-      {
-        "food_name": "Pad Thai",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Pad Thai",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Pad Thai",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761507911",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761507935",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761507949",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Sample Meal",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Caesar Salad",
-        "calories": 220.0,
-        "protein": 6.0,
-        "fat": 14.0,
-        "carbs": 15.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Pad Thai",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Pad Thai",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Pad Thai",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761536127",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761536143",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761536161",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761537513",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761544067",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Meal 1761544501",
-        "calories": 350.0,
-        "protein": 15.0,
-        "fat": 12.0,
-        "carbs": 40.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Grilled Chicken Salad",
-        "calories": 350.0,
-        "protein": 30.0,
-        "fat": 12.0,
-        "carbs": 20.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Grilled Chicken Salad",
-        "calories": 350.0,
-        "protein": 30.0,
-        "fat": 12.0,
-        "carbs": 20.0,
-        "date": "2025-10-27",
-        "thumb": ""
-      },
-      {
-        "food_name": "Grilled Chicken Salad",
-        "calories": 350.0,
-        "protein": 30.0,
-        "fat": 12.0,
-        "carbs": 20.0,
-        "date": "2025-10-27",
-        "thumb": ""
+        "thumb": "thumbs/muh_1761570177.jpg",
+        "predicted_confidence": 0.10636020451784134,
+        "model_label": "fried rice"
       }
     ]
   }
