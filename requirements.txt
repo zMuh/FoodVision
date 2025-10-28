@@ -8,3 +8,5 @@ pillow
 opencv-python-headless
 firebase-admin
 plotly
+streamlit-option-menu
+streamlit-cookies-manager
