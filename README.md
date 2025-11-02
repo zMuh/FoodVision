@@ -6,7 +6,7 @@
 
 <p align="center">
   🚀 <b>Try the live app here:</b>
-  👉 <a href="https://ru6kuspvgvczcmmetp5xhp.streamlit.app/" target="_blank">https://ru6kuspvgvczcmmetp5xhp.streamlit.app/</a>
+  👉 <a href="https://ru6kuspvgvczcmmetp5xhp.streamlit.app/" target="_blank">Website</a>
 </p>
 
 ---
