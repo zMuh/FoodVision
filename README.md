@@ -101,24 +101,6 @@ Simple and secure login interface allowing users to access their personalized tr
 
 ---
 
-## 🧩 Project Architecture
-FoodVision/
-├── assets/
-│ ├── logo.png
-│ ├── dashboard.jpg
-│ ├── dashboard2.jpg
-│ ├── login.png
-│ └── meal_analysis.jpg
-├── model/ # YOLOv11 training scripts and weights
-├── app/ # Streamlit frontend + backend logic
-├── data/ # Dataset references
-├── firebase_utils.py # Firebase connection & storage
-├── utils/ # Helper functions
-└── README.md
-
-
----
-
 ## 🧪 Installation
 
 ```bash
