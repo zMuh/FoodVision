@@ -6,7 +6,7 @@
 
 <p align="center">
   🚀 <b>Try the live app here:</b>
-  👉 <a href="https://ru6kuspvgvczcmmetp5xhp.streamlit.app/" target="_blank">Website</a>
+  👉 <a href="https://ru6kuspvgvczcmmetp5xhp.streamlit.app/" target="_blank">https://ru6kuspvgvczcmmetp5xhp.streamlit.app/</a>
 </p>
 
 ---
@@ -102,3 +102,32 @@ Simple and secure login interface allowing users to access their personalized tr
 ---
 
 ## 🧩 Project Architecture
+FoodVision/
+├── assets/
+│ ├── logo.png
+│ ├── dashboard.jpg
+│ ├── dashboard2.jpg
+│ ├── login.png
+│ └── meal_analysis.jpg
+├── model/ # YOLOv11 training scripts and weights
+├── app/ # Streamlit frontend + backend logic
+├── data/ # Dataset references
+├── firebase_utils.py # Firebase connection & storage
+├── utils/ # Helper functions
+└── README.md
+
+
+---
+
+## 🧪 Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/zMuh/FoodVision.git
+cd FoodVision
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the app locally
+streamlit run app/app.py
